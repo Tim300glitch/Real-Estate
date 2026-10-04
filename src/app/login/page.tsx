@@ -24,10 +24,18 @@ function LoginForm() {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    const res = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) });
+    let res: Response;
+    try {
+      res = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) });
+    } catch {
+      setBusy(false);
+      return setError("Can't reach the server — is it running?");
+    }
     const data = await res.json().catch(() => ({}));
     setBusy(false);
-    if (!res.ok) return setError(data.error ?? "Sign-in failed");
+    if (!res.ok) return setError(data.error ?? `Sign-in failed (HTTP ${res.status}) — check the server log`);
+    const me = await fetch("/api/auth/me");
+    if (!me.ok) return setError("Signed in, but the browser didn't keep the session cookie. If you're on plain http through a proxy, make sure it forwards x-forwarded-proto correctly.");
     const next = params.get("next");
     router.replace(next && next.startsWith("/") && !next.startsWith("//") ? next : "/dashboard");
   }

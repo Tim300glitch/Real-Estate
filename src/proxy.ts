@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { jwtVerify } from "jose";
+import { authSecretKey } from "./server/auth/secret";
 
 // Gate every page behind a valid session. API routes enforce auth + RBAC themselves (src/server/api.ts).
 const PUBLIC = ["/login", "/api/auth/login", "/favicon.ico", "/maplibre/"];
@@ -10,10 +11,9 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
   const token = req.cookies.get("wos_session")?.value;
-  const secret = process.env.AUTH_SECRET && process.env.AUTH_SECRET.length >= 32 ? process.env.AUTH_SECRET : "insecure-development-secret-change-me-please-0000";
   if (token) {
     try {
-      await jwtVerify(token, new TextEncoder().encode(secret), { issuer: "wholesale-os" });
+      await jwtVerify(token, authSecretKey(), { issuer: "wholesale-os" });
       return NextResponse.next();
     } catch { /* fall through */ }
   }

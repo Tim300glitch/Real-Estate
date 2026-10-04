@@ -2,6 +2,7 @@ import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import type { Role } from "@/lib/types";
+import { authSecretKey } from "./secret";
 
 export const SESSION_COOKIE = "wos_session";
 const MAX_AGE = 60 * 60 * 12; // 12h
@@ -13,14 +14,7 @@ export interface Session {
   role: Role;
 }
 
-function secret() {
-  const s = process.env.AUTH_SECRET;
-  if (!s || s.length < 32) {
-    if (process.env.NODE_ENV === "production") throw new Error("AUTH_SECRET must be set (≥32 chars) in production");
-    return new TextEncoder().encode("insecure-development-secret-change-me-please-0000");
-  }
-  return new TextEncoder().encode(s);
-}
+const secret = authSecretKey;
 
 export async function signSession(s: Session): Promise<string> {
   return new SignJWT({ ...s })
@@ -46,10 +40,10 @@ export async function getSession(): Promise<Session | null> {
   return verifySession(c.get(SESSION_COOKIE)?.value);
 }
 
-export const cookieOptions = {
+export const cookieOptions = (secure: boolean) => ({
   httpOnly: true,
   sameSite: "lax" as const,
-  secure: process.env.NODE_ENV === "production",
+  secure,
   path: "/",
   maxAge: MAX_AGE,
-};
+});

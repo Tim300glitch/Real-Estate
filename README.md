@@ -14,9 +14,14 @@ assignment fee.
 
 ```bash
 npm install
-cp .env.example .env.local      # set AUTH_SECRET (≥32 chars)
+cp .env.example .env.local      # optional in demo mode; set AUTH_SECRET (≥32 chars) for anything real
 npm run dev                     # http://localhost:3000
 ```
+
+Without `AUTH_SECRET` the app runs on a built-in demo secret and logs a warning; with
+`DEMO_MODE=false` a real secret is required. Session cookies are marked `Secure` only when
+the request arrives over HTTPS (directly or via `x-forwarded-proto`), so plain-http local
+and LAN setups work too.
 
 Sign in with a demo account (password `demo1234`): `owner@demo.wholesale` (full access),
 `acq@`, `dispo@`, `va@`, or `viewer@demo.wholesale` (read-only) — roles are enforced server-side.
