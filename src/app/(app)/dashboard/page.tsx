@@ -51,7 +51,7 @@ export default function Dashboard() {
           <Card title="Assignment fees by month" subtitle="recorded at closing" className="lg:col-span-2" actions={<Button size="xs" variant="ghost" href="/analytics">Analytics <ArrowRight size={12} /></Button>}>
             <BarChart labels={fees.labels} series={[{ name: "Fees", values: fees.fees }]} format={(v) => usd(v, { compact: true })} height={190} />
           </Card>
-          <Card title="Activity" subtitle="today & recent" bodyClass="max-h-[260px] overflow-y-auto">
+          <Card title="Activity" subtitle="today & recent" bodyClass="p-3 max-h-[260px] overflow-y-auto">
             <ol className="space-y-2.5">
               {ws.activities.slice(0, 30).map((a) => (
                 <li key={a.id} className="grid grid-cols-[62px_1fr] gap-2 text-[12px]">

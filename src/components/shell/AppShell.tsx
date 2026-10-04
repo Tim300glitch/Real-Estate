@@ -122,7 +122,7 @@ function TopBar({ user }: { user: ReturnType<typeof useUI.getState>["user"] }) {
         <Search size={14} /><span className="flex-1 text-left truncate">Search address, owner, APN, phone, buyer…</span><span className="hidden sm:inline"><Kbd>⌘K</Kbd></span>
       </button>
       <div className="ml-auto flex items-center gap-1">
-        <Button variant="primary" size="sm" icon={<Plus size={14} />} onClick={() => openQuick("lead")} className="hidden sm:inline-flex">New lead</Button>
+        <span className="hidden sm:block"><Button variant="primary" size="sm" icon={<Plus size={14} />} onClick={() => openQuick("lead")}>New lead</Button></span>
         <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="h-8 w-8 inline-flex items-center justify-center rounded-md text-fg-2 hover:bg-hover" title="Toggle theme">
           {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
         </button>

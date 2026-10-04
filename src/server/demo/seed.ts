@@ -173,7 +173,7 @@ export function buildSeed(): SeedData {
   task(fre, "Send revised offer at $329k", "send_offer", 0, 12, false, "u-acq", 1);
 
   // ── 7. Driving for dollars: 6043 Wren Hollow Way ─────────────────
-  const wren = lead("f-wren-hollow", "new_lead", "potential", "driving_for_dollars", 1, ["Driving for Dollars", "Vacant", "Distressed"], { campaignId: "cp_d4d" });
+  const wren = lead("f-wren-hollow", "new_lead", "potential", "driving_for_dollars", 0, ["Driving for Dollars", "Vacant", "Distressed"], { campaignId: "cp_d4d" });
   notes.push({ id: id("nt_"), entityType: "lead", entityId: wren.id, body: "D4D: boarded rear windows, overgrown yard, 3 newspapers on porch, roof tarp on garage.", pinned: false, tags: ["d4d"], viaVoice: true, photoIds: [], userId: "u-acq", at: at(1, 17, 40) });
   task(wren, "Skip trace owner (Redding mailing address)", "other", 0, 9, false, "u-va");
 
@@ -343,7 +343,6 @@ export function buildSeed(): SeedData {
   documents.push({ id: id("dc_"), name: "Offer — 7428 Alder Grove Way ($285,000).pdf", kind: "offer", leadId: alder.id, propertyId: "f-alder-grove", createdAt: at(2, 16), generated: true });
   documents.push({ id: id("dc_"), name: "Deal Package — 4471 Quarry Oak Ct.pdf", kind: "deal_package", leadId: quarry.id, propertyId: "f-quarry-oak", createdAt: at(5, 9), generated: true });
 
-  act(0, 10, 42, "lead.created", "Seller lead added — 6043 Wren Hollow Way (Driving for Dollars)", wren.id, "f-wren-hollow");
   act(0, 11, 7, "arv.calculated", "ARV calculated — $455,000 · 1408 Fremont Terrace", fre.id, "f-fremont-terrace");
   act(0, 11, 18, "offer.created", "Offer drafted — $329,000 · 1408 Fremont Terrace", fre.id, "f-fremont-terrace");
   act(0, 12, 2, "task.created", "Seller follow-up scheduled — 7428 Alder Grove Way", alder.id, "f-alder-grove");

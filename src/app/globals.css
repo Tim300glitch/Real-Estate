@@ -115,6 +115,7 @@ body {
 *::-webkit-scrollbar { width: 8px; height: 8px; }
 *::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 8px; }
 
+@layer components {
 /* form controls */
 .input {
   height: 30px; width: 100%; border-radius: 6px; border: 1px solid var(--border);
@@ -132,6 +133,8 @@ select.input { padding-right: 24px; }
 .tbl tbody tr:hover td { background: var(--hover); }
 .tbl tr.row-muted td { opacity: .45; }
 .tbl tr.row-active td { background: var(--accent-soft); }
+
+}
 
 /* maplibre theming */
 .maplibregl-ctrl-group { background: var(--panel) !important; border: 1px solid var(--border); box-shadow: var(--shadow) !important; }

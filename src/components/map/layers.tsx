@@ -331,15 +331,16 @@ export function RouteLayer({ points }: { points: LngLat[] }) {
 
 export function MapLegend({ mode, extra }: { mode: ColorMode; extra?: React.ReactNode }) {
   const l = LEGENDS[mode];
+  const [open, setOpen] = useState(true);
   return (
     <div className="rounded-lg border border-border bg-panel/95 backdrop-blur px-2.5 py-2 shadow-panel text-[11px] max-w-[200px]">
-      <div className="font-semibold text-[10.5px] uppercase tracking-wide text-muted mb-1">{l.label}</div>
-      <div className="space-y-0.5">
+      <button onClick={() => setOpen((o) => !o)} className="font-semibold text-[10.5px] uppercase tracking-wide text-muted flex items-center gap-1" title="Toggle legend">{l.label} {open ? "▾" : "▸"}</button>
+      {open && <div className="space-y-0.5 mt-1">
         {l.items.filter((i) => i.label).map((i) => (
           <div key={i.label} className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full border border-white/60" style={{ background: i.color }} />{i.label}</div>
         ))}
-      </div>
-      {extra}
+      </div>}
+      {open && extra}
     </div>
   );
 }
